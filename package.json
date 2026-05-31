@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "check": "node --check server.js && node --check public/script.js && node --check tests/socket-flow.js",
+    "check": "node --check server.js && node --check storage.js && node --check public/script.js && node --check tests/socket-flow.js",
     "test:socket": "node tests/socket-flow.js"
   },
   "engines": {
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2",
+    "pg": "^8.21.0",
     "socket.io": "^4.7.5"
   },
   "devDependencies": {

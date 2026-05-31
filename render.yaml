@@ -14,3 +14,14 @@ services:
         value: "*"
       - key: PUBLIC_SOCKET_URL
         value: ""
+      - key: DATABASE_URL
+        fromDatabase:
+          name: conecta-rock-db
+          property: connectionString
+
+databases:
+  - name: conecta-rock-db
+    plan: free
+    region: oregon
+    databaseName: conecta_rock
+    user: conecta_rock

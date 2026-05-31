@@ -1,10 +1,10 @@
 const crypto = require('node:crypto');
-const fs = require('node:fs');
 const http = require('node:http');
 const path = require('node:path');
 
 const express = require('express');
 const { Server } = require('socket.io');
+const { createMessageStorage } = require('./storage');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,10 +23,14 @@ const MAX_TEXT_LENGTH = 600;
 const MAX_IMAGE_BYTES = 1_500_000;
 
 const dataDir = path.join(__dirname, 'data');
-const historyFile = path.join(dataDir, 'messages.json');
+const storage = createMessageStorage({
+  rooms: ROOM_NAMES,
+  historyLimit: HISTORY_LIMIT,
+  dataDir,
+});
 
 const users = new Map();
-const histories = loadHistory();
+let histories = emptyHistories();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -40,7 +44,7 @@ app.get('/api/config.js', (_req, res) => {
 });
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, app: 'Conecta Rock' });
+  res.json({ ok: true, app: 'Conecta Rock', storage: storage.kind });
 });
 
 io.on('connection', (socket) => {
@@ -147,32 +151,32 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Conecta Rock rodando em http://localhost:${PORT}`);
-});
+startServer();
 
-function loadHistory() {
+async function startServer() {
   try {
-    if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
-    if (!fs.existsSync(historyFile)) {
-      const empty = Object.fromEntries(ROOM_NAMES.map((room) => [room, []]));
-      fs.writeFileSync(historyFile, JSON.stringify(empty, null, 2));
-      return empty;
-    }
+    await storage.init();
+    histories = await storage.loadHistory();
 
-    const parsed = JSON.parse(fs.readFileSync(historyFile, 'utf8'));
-    return Object.fromEntries(ROOM_NAMES.map((room) => [room, Array.isArray(parsed[room]) ? parsed[room] : []]));
+    server.listen(PORT, () => {
+      console.log(`Conecta Rock rodando em http://localhost:${PORT}`);
+      console.log(`Historico usando armazenamento: ${storage.kind}`);
+    });
   } catch (error) {
-    console.warn('Nao foi possivel carregar o historico:', error.message);
-    return Object.fromEntries(ROOM_NAMES.map((room) => [room, []]));
+    console.error('Nao foi possivel iniciar o Conecta Rock:', error);
+    process.exit(1);
   }
 }
 
 function pushHistory(room, message) {
   histories[room] = [...(histories[room] || []), message].slice(-HISTORY_LIMIT);
-  fs.writeFile(historyFile, JSON.stringify(histories, null, 2), (error) => {
-    if (error) console.warn('Nao foi possivel salvar o historico:', error.message);
+  storage.saveMessage(room, message, histories).catch((error) => {
+    console.warn('Nao foi possivel salvar o historico:', error.message);
   });
+}
+
+function emptyHistories() {
+  return Object.fromEntries(ROOM_NAMES.map((room) => [room, []]));
 }
 
 function emitOnlineUsers() {

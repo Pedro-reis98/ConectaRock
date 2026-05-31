@@ -11,14 +11,22 @@ Motivo: o Conecta Rock usa Express + Socket.IO. O servidor precisa ficar vivo ma
 Use esta opcao para entregar o desafio sem dor de cabeca.
 
 1. Entre no Render.
-2. New + Web Service ou Blueprint.
+2. New + Blueprint.
 3. Conecte o repo:
 
 ```text
 https://github.com/Pedro-reis98/ConectaRock
 ```
 
-4. Se for Web Service manual:
+4. Confirme o Blueprint. O arquivo `render.yaml` ja cria:
+
+```text
+Web Service: conecta-rock
+Postgres: conecta-rock-db
+DATABASE_URL ligado automaticamente no backend
+```
+
+5. Se preferir criar Web Service manualmente:
 
 ```text
 Runtime: Node
@@ -27,15 +35,16 @@ Start Command: npm start
 Health Check Path: /health
 ```
 
-5. Variaveis:
+6. Variaveis manuais:
 
 ```text
 NODE_VERSION=20
 CORS_ORIGIN=*
 PUBLIC_SOCKET_URL=
+DATABASE_URL=postgresql://...
 ```
 
-6. Depois de publicar, abra a URL do Render. O frontend e o backend rodam no mesmo dominio.
+7. Depois de publicar, abra a URL do Render. O frontend e o backend rodam no mesmo dominio.
 
 ## Opcao B: backend no Render + frontend no Vercel
 
@@ -79,6 +88,14 @@ SOCKET_URL=https://sua-url-do-render.onrender.com
 
 Neste modo, o HTML/CSS/JS ficam na Vercel e o Socket.IO conecta no Render.
 
-## Observacao sobre historico
+## Banco de dados e historico
 
-O historico fica salvo em `data/messages.json`. Em hospedagem gratuita, o arquivo pode voltar ao estado do repo quando o servico reinicia ou redeploya. Para o desafio isso normalmente e suficiente. Para producao real, o ideal seria banco de dados.
+O projeto usa Postgres quando existe `DATABASE_URL`. No Render Blueprint essa variavel e criada automaticamente a partir do banco `conecta-rock-db`.
+
+Localmente, se `DATABASE_URL` nao existir, o app usa `data/messages.json`. Assim da para rodar facil no PC sem instalar Postgres. Em producao, use Postgres para o historico nao depender do sistema de arquivos do servidor.
+
+Se usar um Postgres externo que exige SSL, adicione tambem:
+
+```text
+PGSSLMODE=require
+```

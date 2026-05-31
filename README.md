@@ -17,9 +17,16 @@ npm start
 
 No Windows, tambem da para dar duplo clique em `start.bat`.
 
+Sem configuracao extra, o historico local fica em `data/messages.json`. Para usar Postgres local ou em deploy, defina `DATABASE_URL` antes de iniciar:
+
+```bash
+set DATABASE_URL=postgresql://usuario:senha@host:5432/banco
+npm start
+```
+
 ## Deploy
 
-O jeito mais indicado e publicar tudo junto no Render, porque o projeto usa Socket.IO/WebSocket. Tambem deixei suporte para frontend na Vercel e backend no Render.
+O jeito mais indicado e publicar tudo junto no Render, porque o projeto usa Socket.IO/WebSocket. O `render.yaml` cria o Web Service e um Postgres gerenciado para salvar o historico.
 
 Leia o passo a passo em [`DEPLOY.md`](DEPLOY.md).
 
@@ -36,7 +43,8 @@ Leia o passo a passo em [`DEPLOY.md`](DEPLOY.md).
 - Emojis e upload de imagens pequenas.
 - Tema claro/escuro.
 - Som de notificacao.
-- Historico persistente em `data/messages.json`.
+- Historico persistente em Postgres quando existe `DATABASE_URL`.
+- Fallback local em `data/messages.json` quando nao existe banco configurado.
 
 ## Teste rapido do socket
 
@@ -55,6 +63,7 @@ ConectaRock/
   server.js
   package.json
   package-lock.json
+  storage.js
   render.yaml
   vercel.json
   DEPLOY.md
