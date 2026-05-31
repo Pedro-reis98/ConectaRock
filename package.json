@@ -1,0 +1,27 @@
+{
+  "name": "conecta-rock",
+  "version": "1.0.0",
+  "description": "Chat online em tempo real feito com Node.js, Express, Socket.IO e frontend vanilla.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test:socket": "node tests/socket-flow.js"
+  },
+  "keywords": [
+    "socket.io",
+    "chat",
+    "node",
+    "express",
+    "vanilla-js"
+  ],
+  "author": "PedroDoRock",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.3"
+  }
+}

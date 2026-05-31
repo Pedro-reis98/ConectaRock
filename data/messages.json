@@ -1,0 +1,97 @@
+{
+  "Geral": [
+    {
+      "id": "seed-rafa-join",
+      "type": "system",
+      "text": "RafaRock entrou na sala",
+      "room": "Geral",
+      "createdAt": "2026-05-31T15:28:00.000Z"
+    },
+    {
+      "id": "seed-lari-join",
+      "type": "system",
+      "text": "LariRock entrou na sala",
+      "room": "Geral",
+      "createdAt": "2026-05-31T15:31:00.000Z"
+    },
+    {
+      "id": "seed-rafa-1",
+      "userId": "demo-rafa",
+      "username": "RafaRock",
+      "avatar": "RR",
+      "color": "#0679ff",
+      "room": "Geral",
+      "text": "Fala, galera! Rock nunca para! 🤘",
+      "image": null,
+      "private": false,
+      "toUserId": null,
+      "toUsername": null,
+      "createdAt": "2026-05-31T15:32:00.000Z"
+    },
+    {
+      "id": "seed-pedro-1",
+      "userId": "demo-pedro",
+      "username": "PedroDoRock",
+      "avatar": "PR",
+      "color": "#0679ff",
+      "room": "Geral",
+      "text": "Fala Rafa! Tudo certo? 🎸",
+      "image": null,
+      "private": false,
+      "toUserId": null,
+      "toUsername": null,
+      "createdAt": "2026-05-31T15:33:00.000Z"
+    },
+    {
+      "id": "seed-lari-1",
+      "userId": "demo-lari",
+      "username": "LariRock",
+      "avatar": "LR",
+      "color": "#e9344d",
+      "room": "Geral",
+      "text": "E ai pessoal! Preparados pro final de semana?",
+      "image": null,
+      "private": false,
+      "toUserId": null,
+      "toUsername": null,
+      "createdAt": "2026-05-31T15:33:00.000Z"
+    },
+    {
+      "id": "seed-pedro-2",
+      "userId": "demo-pedro",
+      "username": "PedroDoRock",
+      "avatar": "PR",
+      "color": "#0679ff",
+      "room": "Geral",
+      "text": "Demais! Vai ter show insano! 🔥",
+      "image": null,
+      "private": false,
+      "toUserId": null,
+      "toUsername": null,
+      "createdAt": "2026-05-31T15:34:00.000Z"
+    },
+    {
+      "id": "seed-rafa-2",
+      "userId": "demo-rafa",
+      "username": "RafaRock",
+      "avatar": "RR",
+      "color": "#0679ff",
+      "room": "Geral",
+      "text": "Boraaaa! 🤘🤘",
+      "image": null,
+      "private": false,
+      "toUserId": null,
+      "toUsername": null,
+      "createdAt": "2026-05-31T15:34:00.000Z"
+    },
+    {
+      "id": "seed-beto-left",
+      "type": "system",
+      "text": "BetoBass saiu da sala",
+      "room": "Geral",
+      "createdAt": "2026-05-31T15:35:00.000Z"
+    }
+  ],
+  "Backstage": [],
+  "Ao vivo": []
+}
