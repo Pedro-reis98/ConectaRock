@@ -1,4 +1,6 @@
-const socket = io();
+const socket = io(getSocketUrl() || undefined, {
+  transports: ['websocket', 'polling'],
+});
 
 const state = {
   me: null,
@@ -489,6 +491,11 @@ function formatTime(date) {
     hour: '2-digit',
     minute: '2-digit',
   }).format(new Date(date));
+}
+
+function getSocketUrl() {
+  const configuredUrl = window.CONECTA_ROCK_CONFIG?.socketUrl;
+  return typeof configuredUrl === 'string' ? configuredUrl.trim() : '';
 }
 
 function playNotification() {

@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "check": "node --check server.js && node --check public/script.js && node --check tests/socket-flow.js",
     "test:socket": "node tests/socket-flow.js"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "keywords": [
     "socket.io",

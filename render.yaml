@@ -1,0 +1,16 @@
+services:
+  - type: web
+    runtime: node
+    name: conecta-rock
+    plan: free
+    region: oregon
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: PUBLIC_SOCKET_URL
+        value: ""

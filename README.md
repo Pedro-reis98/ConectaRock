@@ -17,6 +17,12 @@ npm start
 
 No Windows, tambem da para dar duplo clique em `start.bat`.
 
+## Deploy
+
+O jeito mais indicado e publicar tudo junto no Render, porque o projeto usa Socket.IO/WebSocket. Tambem deixei suporte para frontend na Vercel e backend no Render.
+
+Leia o passo a passo em [`DEPLOY.md`](DEPLOY.md).
+
 ## Recursos implementados
 
 - Envio e recebimento de mensagens em tempo real com Socket.IO.
@@ -49,6 +55,10 @@ ConectaRock/
   server.js
   package.json
   package-lock.json
+  render.yaml
+  vercel.json
+  DEPLOY.md
+  api/config.js
   start.bat
   data/messages.json
   public/

@@ -8,7 +8,13 @@ const { Server } = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const corsOrigins = parseOrigins(process.env.CORS_ORIGIN);
+const io = new Server(server, {
+  cors: {
+    origin: corsOrigins.length ? corsOrigins : true,
+    methods: ['GET', 'POST'],
+  },
+});
 
 const PORT = process.env.PORT || 3000;
 const ROOM_NAMES = ['Geral', 'Backstage', 'Ao vivo'];
@@ -23,6 +29,15 @@ const users = new Map();
 const histories = loadHistory();
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/api/config.js', (_req, res) => {
+  res
+    .type('application/javascript')
+    .set('Cache-Control', 'no-store')
+    .send(`window.CONECTA_ROCK_CONFIG = ${JSON.stringify({
+      socketUrl: process.env.PUBLIC_SOCKET_URL || '',
+    })};`);
+});
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true, app: 'Conecta Rock' });
@@ -184,6 +199,14 @@ function systemNotice(text, room) {
 
 function normalizeRoom(room) {
   return ROOM_NAMES.includes(room) ? room : ROOM_NAMES[0];
+}
+
+function parseOrigins(value) {
+  if (!value || value.trim() === '*') return [];
+  return value
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 }
 
 function cleanText(value, maxLength) {
